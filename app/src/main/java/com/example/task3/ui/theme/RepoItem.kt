@@ -3,6 +3,7 @@ package com.example.task3.ui.theme
 import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,9 +25,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.task3.R
+import com.example.task3.ui.theme.screens.issues_list.Issue
+import com.example.task3.ui.theme.screens.issues_list.fakeIssueList
 
 @Composable
-fun RepoItem(modifier: Modifier = Modifier) {
+fun RepoItem(
+    Issue:Issue,
+    modifier: Modifier = Modifier,
+    onItemClick:()->Unit
+    ) {
     Modifier.padding(top = 20.dp)
     Row (
         Modifier.fillMaxWidth()
@@ -35,6 +42,9 @@ fun RepoItem(modifier: Modifier = Modifier) {
                 color = Color.White,
                 MaterialTheme.shapes.large
             )
+            .clickable {
+                onItemClick()
+            }
 
     ){
         Image(
@@ -44,55 +54,55 @@ fun RepoItem(modifier: Modifier = Modifier) {
             contentDescription = null
         )
         Column {
-            Text(
-                    modifier = Modifier.padding(bottom = 10.dp),
-                text = "Bump pyarrow from 7 october",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                fontWeight = FontWeight.Bold,
-                style = Typography.bodyLarge
+            Row {
+                Text(
+                    modifier = Modifier.padding(bottom = 10.dp)
+                        .weight(1f),
+                    text = Issue.title,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    fontWeight = FontWeight.Bold,
+                    style = Typography.bodyLarge
 
                 )
+                Text(
+                    text = Issue.status,
+                    style = Typography.bodyLarge,
+                    modifier = Modifier.padding(end = 20.dp),
+
+                )
+
+            }
+
 
 
             Text(
                 modifier = Modifier.padding(bottom = 10.dp),
-                text = "NONE",
+                text = Issue.description,
                 style = Typography.bodyLarge
 
             )
             Text(
                 modifier = Modifier.padding(bottom = 12.dp),
-                text = buildAnnotatedString {
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("Created At : ")
-                    }
-                    append("2023-11-9 ,23:pm ")
-                },
+                text = "Created At ${Issue.createdAt}" ,
                         style = Typography.bodyLarge,
                 maxLines = 1
 
             )
         }
-        Text(
-            text = "Open",
-            style = Typography.bodyLarge,
-            modifier = Modifier.padding(end = 20.dp),
-            textAlign = TextAlign.Right
-
-
-        )
 
     }
 }
 
 @Preview(
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xFFB4AFB0
+
 )
 @Composable
 private fun PreviewRepoItem() {
     Task3Theme {
-        RepoItem()
+        RepoItem(onItemClick ={}, Issue = fakeIssueList.first() )
     }
 
 }

@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.task3.ui.theme.Navigation.AppNavHost
 import com.example.task3.ui.theme.RepoItem
 import com.example.task3.ui.theme.Task3Theme
 
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Task3Theme {
-               RepoItem()
+                AppNavHost()
             }
         }
     }
